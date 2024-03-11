@@ -6,8 +6,9 @@ Instructions for combining the Lyme Town Office photo with an audio track from a
 2. Drag the resulting audio file to this folder
 3. Run `sh ImageAndAudio.sh` This will produce an output file named _Combined\_Committee\_YYYY-MM-DD.mov_
 4. If desired, run the resulting _.mov_ file through Shutter Encoder to add committee name, date, and time stamp.
-5. _Cleanup:_ Remove the original audio file and the resulting _.mov_ file from the folder, so they won't confuse us next time.
-
+5. _Cleanup:_ so they won't confuse us next time.
+  - Remove the original audio file from the folder
+  - Move the resulting _Combined...mov_ file to the OutputFiles folder. Discard after they have been uploaded
 
 ---------
 
