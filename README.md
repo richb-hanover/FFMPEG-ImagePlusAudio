@@ -10,6 +10,15 @@ Instructions for combining the Lyme Town Office photo with an audio track from a
   - Remove the original audio file from the folder
   - Move the resulting _Combined...mov_ file to the OutputFiles folder. Discard after they have been uploaded
 
+## Shutter Encoder settings
+
+Labels should both be 30%, and placed at:
+
+* Timecode X/Y: 700/570
+* Label X/Y: 100/570
+* Font size: 30%
+
+
 ---------
 
 ## Experiments with `ffmpeg`
@@ -50,9 +59,4 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
    
    Blows big chunks with some kind of parameter error...
 
-## Shutter Encoder settings
 
-Labels should both be 30%, and placed at:
-
-* Timecode X/Y 700/570
-* Label X/Y 100/570
