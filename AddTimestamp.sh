@@ -47,12 +47,6 @@ ffmpeg \
 		drawtext=timecode='$start_time': r=30: x=700: y=580: fontsize=36:fontcolor=white: box=1:boxcolor=gray" \
 	"$outfile"
 
-	
-#	-vf "drawtext=timecode=$start_time: r=30: x=700: y=580: fontcolor=white: box=1: boxcolor=0x00000000@1" 	\
-
-	# drawtext=text=${label}:x=100:y=580:fontsize=24, 
-	# 	-vf "drawtext=text='timecode':rate=30:start_number=$start_frame:x=700:y=580:fontsize=24" \
-
 # From https://trac.ffmpeg.org/wiki/FilteringGuide#BurntinTimecode
 # ffmpeg -i in.mp4 -vf "drawtext=fontfile=/usr/share/fonts/truetype/DroidSans.ttf: timecode='09\:57\:00\;00': r=30: \
 #    x=(w-tw)/2: y=h-(2*lh): fontcolor=white: box=1: boxcolor=0x00000000@1" -an -y out.mp4
