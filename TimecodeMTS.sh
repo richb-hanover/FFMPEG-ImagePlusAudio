@@ -2,6 +2,7 @@
 #
 # Merge multiple .MTS files into a single .mts file
 #   Note: These files are created by Rich's Panasonic HDC-TM80 video camera
+# Then add a label and timecode to the video as 720p format
 #   
 # Usage: 
 # 1. Drag the AVCHD file from the SD card to the Downloads folder
@@ -9,10 +10,9 @@
 # 3. Show Package Contents on the BDMV file
 # 4. This reveals the STREAM folder, containing files named 0000.MTS, 0001.MTS, etc 
 # 5. Drag those files to this folder (making copies of the files)
-# 6. Run `sh ./MergeMTS.sh` to produce "Merged.mts"
-#
+# 
 # Invoke with:
-# sh ./TimestampMTS.sh "Meeting Name" 01:23:45
+# sh ./TimecodeMTS.sh "Meeting Name" 01:23:45
 
 # Get the label text
 label="$1"
@@ -40,10 +40,9 @@ cat *.MTS  | ffmpeg  -i pipe: -c:a copy -c:v copy Merged.mts
 #   There are lots of fussy options. See the README.md for details
  
 ffmpeg -i Merged.mts \
-	-c:v prores -profile:v 2 -c:a copy \
-	-vf "drawtext=text=${label}:               x=100:  y=975: fontsize=36:fontcolor=white: box=1:boxcolor=gray, \
-		drawtext=timecode='$start_time': r=30: x=1000: y=975: fontsize=36:fontcolor=white: box=1:boxcolor=gray" \
-   	-an \
+	-s 1280x720 -c:v libx264 -crf 23 -c:a copy \
+	-vf "drawtext=text=${label}:               x=100:  y=975: fontsize=48:fontcolor=white: box=1:boxcolor=gray, \
+		drawtext=timecode='$start_time': r=30: x=1300: y=975: fontsize=48:fontcolor=white: box=1:boxcolor=gray" \
    	-y \
    	"$outfile"
 
