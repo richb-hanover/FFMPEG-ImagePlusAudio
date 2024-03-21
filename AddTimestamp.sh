@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Combine Image and Audio file to produce a .mov output file
+# Combine Image and Audio file, add a timestamp and produce a .mov output file
 #
 # Usage: 
 # 1. Place an image file (.jpeg) and audio file (.mp4) in this folder.

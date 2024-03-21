@@ -1,4 +1,7 @@
+# Don't save video files
 *.mp4
 *.mov
+*.MTS
 
-untitled/*
+# Don't save cache of completed files
+OutputFiles/*

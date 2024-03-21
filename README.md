@@ -1,23 +1,21 @@
-# Combine audio and still image
+# Combine audio and still image from audio recording
 
 Instructions for combining the Lyme Town Office photo with an audio track from a meeting recording. 
 
-1. Open the audio _.mp4_ file with QuickTime Player, and use the Trim (Cmd-T) function to remove the dead air from the start (and end, if necessary) of the recording. Save as _Committee\_YYYY-MM-DD.mp4_
+1. Open the audio _.mp4_ file with QuickTime Player, and use the Trim (Cmd-T) function to remove the dead air from the start (and end, if necessary) of the recording. Save as _Meeting Name\_ddMMMyyyy.mp4_
 2. Drag the resulting audio file to this folder
-3. Run `sh ImageAndAudio.sh` This will produce an output file named _Combined\_Committee\_YYYY-MM-DD.mov_
-4. If desired, run the resulting _.mov_ file through Shutter Encoder to add committee name, date, and time stamp.
-5. _Cleanup:_ so they won't confuse us next time.
+3. Run `sh AddTimestamp.sh "Meeting Name and Date" hh:mm:ss` This will produce an output file named _Meeting Name and Date-timestamped.mov_
+4. _Cleanup:_ so they won't confuse us next time.
   - Remove the original audio file from the folder
-  - Move the resulting _Combined...mov_ file to the OutputFiles folder. Discard after they have been uploaded
+  - Move the resulting _...-timestamped.mov_ file to the OutputFiles folder. Discard after they have been uploaded
 
-## Shutter Encoder settings
+## Shutter Encoder settings (Obsolete - AddTimestamps.sh automates this)
 
 Labels should both be 30%, and placed at:
 
 * Timecode X/Y: 700/570
 * Label X/Y: 100/570
 * Font size: 30%
-
 
 ---------
 
