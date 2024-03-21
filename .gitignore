@@ -5,3 +5,5 @@
 
 # Don't save cache of completed files
 OutputFiles/*
+# Or the AVCHD file
+AVCHD/*

@@ -27,11 +27,12 @@ run this script, where `hh:mm:ss` is the start time of the meeting:
 
 ## Add label and timecode to Panasonic camera files
 
-The Panasonic HDC-TM80 video camera produces a set of `.MTS` files
+The Panasonic HDC-TM80 video camera produces a `AVCHD` meta-file
+that contains the video in a set of `.MTS` files
 for any recording session.
 These have the filenames `0000.MTS`, `0001.MTS`, etc.
 
-Drag those `.MTS` files into this folder and run this script:
+Drag the AVCHD file into this folder and run this script:
 
 ```
 sh ./TimecodeMTS.sh "Meeting Name and Date" hh:mm:ss
@@ -76,7 +77,7 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
    > time ffmpeg -r 1 -loop 1 -y -i Lyme-Town-Hall-Offices-cropped-1024.jpeg -i SB-20231130.mp4 -c:a copy -r 1 -vcodec libx264 -shortest 11Nov2023-second.mp4
 
    ~5 seconds; result 18.6mbytes.
-	Creates file that cannot be opened by QuickTime Player
+   Creates file that cannot be opened by QuickTime Player
 
 3. Same as #2 with image that has odd number of pixels
 

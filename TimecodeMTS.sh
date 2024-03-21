@@ -5,14 +5,10 @@
 # Then add a label and timecode to the video as 720p format
 #   
 # Usage: 
-# 1. Drag the AVCHD file from the SD card to the Downloads folder
-# 2. If necessary, Show Package Contents to reveal the BDMV file
-# 3. Show Package Contents on the BDMV file
-# 4. This reveals the STREAM folder, containing files named 0000.MTS, 0001.MTS, etc 
-# 5. Drag those files to this folder (making copies of the files)
+# 1. Drag the AVCHD file from the SD card to this folder
 # 
 # Invoke with:
-# sh ./TimecodeMTS.sh "Meeting Name" 01:23:45
+# sh ./TimecodeMTS.sh "Meeting Name" hh:mm:ss
 
 # Get the label text
 label="$1"
@@ -33,8 +29,8 @@ echo "***** $label" "$start_frame" "$start_time"
 outfile="${label}-timecoded.mov"
 
 # Run the ffmpeg command to concatenate all the .MTS files
-cat *.MTS  | ffmpeg  -i pipe: -c:a copy -c:v copy Merged.mts
-# ffmpeg -f concat -safe 0 -i "concat:$(cat *.MTS)" -c copy Merged.mts
+# cat *.MTS  | ffmpeg  -i pipe: -c:a copy -c:v copy Merged.mts
+ffmpeg -i AVCHD/BDMV/STREAM/0000*.MTS -y -c:v copy -c:a copy Merged.mts
 
 # Run the ffmpeg command to read the merged .mts, add a label and timecode and produce a .mov
 #   There are lots of fussy options. See the README.md for details
