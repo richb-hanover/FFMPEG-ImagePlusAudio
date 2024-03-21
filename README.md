@@ -1,25 +1,66 @@
-# Combine audio and still image from audio recording
+# Using ffmpeg to massage image, audio, and video
 
-Instructions for combining the Lyme Town Office photo with an audio track from a meeting recording. 
+Instead of wrestling with [Shutter Encoder](https://shutterencoder.com),
+I decided to go straight to the `ffmpeg` program to accomplish
+certain repeated, well-defined tasks.
 
-1. Open the audio _.mp4_ file with QuickTime Player, and use the Trim (Cmd-T) function to remove the dead air from the start (and end, if necessary) of the recording. Save as _Meeting Name\_ddMMMyyyy.mp4_
-2. Drag the resulting audio file to this folder
-3. Run `sh AddTimestamp.sh "Meeting Name and Date" hh:mm:ss` This will produce an output file named _Meeting Name and Date-timestamped.mov_
-4. _Cleanup:_ so they won't confuse us next time.
+## Add image, label, and timecode to an audio track
+Combines a photo of the Lyme Town Offices with an audio track
+from a meeting recording. 
+
+1. Open the audio _.mp4_ file with QuickTime Player,
+and use the Trim (Cmd-T) function to remove the dead air
+from the start and end of the recording,
+as necessary. Save as _Meeting Name\_ddMMMyyyy.mp4_
+2. Drag the resulting audio file to this folder and
+run this script, where `hh:mm:ss` is the start time of the meeting:
+
+   ```
+   sh AddTimestamp.sh "Meeting Name and Date" hh:mm:ss
+   ```
+   The script looks for a `.mp4` file (and the image of Town Offices)
+   to produce an output file named _Meeting Name and Date-timecoded.mov_
+3. _Cleanup:_ so they won't confuse us next time.
   - Remove the original audio file from the folder
-  - Move the resulting _...-timestamped.mov_ file to the OutputFiles folder. Discard after they have been uploaded
+  - Move the resulting _...-timecoded.mov_ file to the OutputFiles folder.
+  Discard after they have been uploaded
 
-## Shutter Encoder settings (Obsolete - AddTimestamps.sh automates this)
+## Add label and timecode to Panasonic camera files
 
-Labels should both be 30%, and placed at:
+The Panasonic HDC-TM80 video camera produces a set of `.MTS` files
+for any recording session.
+These have the filenames `0000.MTS`, `0001.MTS`, etc.
+
+Drag those `.MTS` files into this folder and run this script:
+
+```
+sh ./TimecodeMTS.sh "Meeting Name and Date" hh:mm:ss
+```
+
+The output is a file named `MeetingName-timecoded.mov`
+
+## Add label and timecode to Zoom video recordings
+
+This follows the format of the TimecodeMTS.sh options
+(no need to merge `.MTS` files) but places the
+label and timecode just below the full-view.
+Needs to be adjusted for the different screen size...
+
+... to come...
+
+## Obsolete Information
+
+This was preliminary work that has been folded into the scripts above.
+
+### Shutter Encoder settings 
+
+For the Town Office image, labels should both be 30%, and placed at:
 
 * Timecode X/Y: 700/570
 * Label X/Y: 100/570
 * Font size: 30%
 
----------
-
-## Experiments with `ffmpeg`
+### Experiments with `ffmpeg`
 From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg](https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg)
 
 1.  Accepted answer:

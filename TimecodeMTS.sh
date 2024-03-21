@@ -30,7 +30,7 @@ echo "***** $label" "$start_frame" "$start_time"
 # file_name=$(find . -maxdepth 1 -type f -name "*.mp4" -exec basename {} \;)
 
 # Append ".mov"
-outfile="${label}-timestamped.mov"
+outfile="${label}-timecoded.mov"
 
 # Run the ffmpeg command to concatenate all the .MTS files
 cat *.MTS  | ffmpeg  -i pipe: -c:a copy -c:v copy Merged.mts
@@ -51,26 +51,3 @@ rm Merged.mts
 
 # and play royalty-free beep from https://www.soundjay.com/beep-sounds-1.html
 afplay ./beep-02.wav
-
-
-# ffmpeg \
-# 	-r 1 \
-# 	-loop 1 \
-# 	-y  \
-# 	-i *.jpeg \
-# 	-i "${file_name}" \
-# 	-c:a copy \
-# 	-r 1 \
-# 	-vcodec libx264 \
-# 	-shortest \
-# 	-pix_fmt yuv444p \
-# 	-vf "drawtext=text=${label}:x=100:y=580:fontsize=24:fontsize=36:fontcolor=white: box=1:boxcolor=gray, \
-# 		drawtext=timecode='$start_time': r=30: x=700: y=580: fontsize=36:fontcolor=white: box=1:boxcolor=gray" \
-# 	"$outfile"
-
-	# -vf "drawtext=fontfile=/usr/share/fonts/truetype/DroidSans.ttf: timecode='09\:57\:00\;00': r=30: \
-   	# 	x=(w-tw)/2: y=h-(2*lh): fontcolor=white: box=1: boxcolor=0x00000000@1" \
-
-# From https://trac.ffmpeg.org/wiki/FilteringGuide#BurntinTimecode
-# ffmpeg -i in.mp4 -vf "drawtext=fontfile=/usr/share/fonts/truetype/DroidSans.ttf: timecode='09\:57\:00\;00': r=30: \
-#    x=(w-tw)/2: y=h-(2*lh): fontcolor=white: box=1: boxcolor=0x00000000@1" -an -y out.mp4

@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Combine Image and Audio file, add a timestamp and produce a .mov output file
+# Combine Image and Audio file, add a timecode and produce a .mov output file
 #
 # Usage: 
 # 1. Place an image file (.jpeg) and audio file (.mp4) in this folder.
@@ -10,7 +10,7 @@
 # 5. Move the .mov file to OutputFiles for safe keeping or later processing
 #
 # Invoke with:
-# sh ./WithTimestamp.sh "Lyme Select Board-6Feb2024" 09:58:00
+# sh ./AddTimecode.sh "Lyme Select Board-6Feb2024" 09:58:00
 
 # Get the label text
 label="$1"
@@ -28,7 +28,7 @@ echo "***** $label" "$start_frame" "$start_time"
 file_name=$(find . -maxdepth 1 -type f -name "*.mp4" -exec basename {} \;)
 
 # Append ".mov"
-outfile="${file_name%.mp4}-timestamped.mov"
+outfile="${file_name%.mp4}-timecoded.mov"
 
 # Run the ffmpeg command to read the two files and produce a .mov
 #   There are lots of fussy options. See the README.md for details
