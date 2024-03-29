@@ -16,23 +16,19 @@ label="$1"
 # Extract hours, minutes, and seconds
 IFS=: read -r hours minutes seconds <<< "$2"
 
-# Calculate total seconds
-# start_frame=$((hours * 3600 + minutes * 60 + seconds))
+# Tweak the entered time to add ";00" 
 start_time="$hours\:$minutes\:$seconds\;00"
 
-echo "***** $label" "$start_frame" "$start_time"
+# Debug label and start time
+# echo "***** $label" "$start_time"
 
-# Get the base filename of ".mp4" files in the current directory
-# file_name=$(find . -maxdepth 1 -type f -name "*.mp4" -exec basename {} \;)
-
-# Append ".mov"
+# Append  "-timecoded.mov" to the provided label for the file name
 outfile="${label}-timecoded.mov"
 
-# Run the ffmpeg command to concatenate all the .MTS files
-# cat *.MTS  | ffmpeg  -i pipe: -c:a copy -c:v copy Merged.mts
-ffmpeg -i AVCHD/BDMV/STREAM/0000*.MTS -y -c:v copy -c:a copy Merged.mts
+# Concatenate all the .MTS files
+cat AVCHD/BDMV/STREAM/*.MTS  > Merged.mts
 
-# Run the ffmpeg command to read the merged .mts, add a label and timecode and produce a .mov
+# Run the ffmpeg command to read the Merged.mts, add a label and timecode and produce a .mov
 #   There are lots of fussy options. See the README.md for details
  
 ffmpeg -i Merged.mts \
@@ -45,5 +41,5 @@ ffmpeg -i Merged.mts \
 # # remove the temporary file
 rm Merged.mts
 
-# and play royalty-free beep from https://www.soundjay.com/beep-sounds-1.html
+# and play royalty-free beep from https://www.soundjay.com/beep-sounds-1.html to say we're done
 afplay ./beep-02.wav
