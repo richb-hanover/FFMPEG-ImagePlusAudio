@@ -1,11 +1,33 @@
 # Using ffmpeg to massage image, audio, and video
 
-Instead of wrestling with [Shutter Encoder](https://shutterencoder.com),
-I decided to go straight to the `ffmpeg` program to accomplish
-certain repeated, well-defined tasks.
+I regularly record public meetings in my town and post them on
+[Youtube](https://www.youtube.com/playlist?list=PLhg_eBomuA8iBIXkkRjULVbqunRqsnHWc).
+This allows residents who could not attend the meeting in person to see
+what occurred. It also supports creation of accurate minutes. 
+
+I like to add a label (consisting of the committee name and date) and a timecode (a running clock showing the current time in the meeting).
+I found a free program [Shutter Encoder](https://shutterencoder.com)
+that does this. It works well, but has a detailed (fussy) user interface
+that requires a long set of steps for every new video.
+
+Since there are only a couple variations of the video formats,
+I decided to write scripts that use the `ffmpeg` program directly
+to accomplish these repeated, well-defined tasks.
+
+I now move the video/audio files into place in a directory
+and issue a command like this, and wait a few minutes.
+The resulting video is ready for uploading to Youtube.
+
+```
+sh ./AddTimecode.sh "Lyme Committee Meeting-6Feb2024" 09:58:00
+```
+
+Here are the notes I use to remind myself how to make the videos.
+This information and the resulting scripts are also available on my
+[github repo](https://github.com/richb-hanover/FFMPEG-ImagePlusAudio).
 
 ## Add image, label, and timecode to an audio track
-Combines a photo of the Lyme Town Offices with an audio track
+Combine a photo of the Lyme Town Offices with an audio track
 from a meeting recording. 
 
 1. Open the audio _.mp4_ file with QuickTime Player,
@@ -25,12 +47,13 @@ run this script, where `hh:mm:ss` is the start time of the meeting:
   - Move the resulting _...-timecoded.mov_ file to the OutputFiles folder.
   Discard after they have been uploaded
 
-## Add label and timecode to Panasonic camera files
+## Add label and timecode to AVCHD files
 
 The Panasonic HDC-TM80 video camera produces a `AVCHD` meta-file
 that contains the video in a set of `.MTS` files
 for any recording session.
-These have the filenames `0000.MTS`, `0001.MTS`, etc.
+The files are in the `AVCHD/BDMV/STREAM` directory
+with filenames `00000.MTS`, `00001.MTS`, etc.
 
 Drag the AVCHD file into this folder and run this script:
 
@@ -46,20 +69,17 @@ This follows the format of the TimecodeMTS.sh options
 (no need to merge `.MTS` files) but places the
 label and timecode just below the full-view.
 Needs to be adjusted for the different screen size...
-
+Label X-Y: 50 996 
+Timecode: 1450 996
 ... to come...
 
-## Obsolete Information
+------
+## Background Information
 
-This was preliminary work that has been folded into the scripts above.
+StackOverflow/SuperUser and the like are your friends.
 
-### Shutter Encoder settings 
-
-For the Town Office image, labels should both be 30%, and placed at:
-
-* Timecode X/Y: 700/570
-* Label X/Y: 100/570
-* Font size: 30%
+So is ChatGPT. I gave it this initial prompt,
+"give me a ffmpeg command to read a .mts file and add a label and a timecode and output a .mov file. Be sure the audio of the .mts file is preserved." and iterated to get the final commands.
 
 ### Experiments with `ffmpeg`
 From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg](https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg)
@@ -92,11 +112,5 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
    Fast (takes 5-10seconds). Creates file that cannot be opened by QuickTime Player
    
    But this file can be run through normal Shutter Encoder procedure to add text and time code. This produces a file that works in QT Player and works on Youtube.
-
-5. ~~Using #4 above, video fadein is slow (one frame per second?) Increase loop to make it faster?...~~
-
-   > ~~time ffmpeg -r 2 -loop 1 -y  -i Lyme-Town-Hall-Offices-cropped-1024-1.jpeg -i SB-20231130.mp4 -c:a copy -r 1 -vcodec libx264 -shortest -pix_fmt yuv444p 11Nov2023-seven.mp4~~
-   
-   Blows big chunks with some kind of parameter error...
 
 
