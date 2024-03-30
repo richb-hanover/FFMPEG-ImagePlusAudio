@@ -4,6 +4,6 @@
 *.MTS
 
 # Don't save cache of completed files
-OutputFiles/*
+CompletedFiles/*
 # Or the AVCHD file
 AVCHD/*

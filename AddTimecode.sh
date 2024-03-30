@@ -7,7 +7,7 @@
 # 2. Run the ImageAndAudio.sh script. It will scan for a .jpeg file and a .mp4 file.
 # 3. Result is a .mov file with "Combined-" plus the same name as the .mp4 file
 # 4. Discard/Move the source .mp4 file out of the directory
-# 5. Move the .mov file to OutputFiles for safe keeping or later processing
+# 5. Move the .mov file to CompletedFiles for safe keeping or later processing
 #
 # Invoke with:
 # sh ./AddTimecode.sh "Lyme Select Board-6Feb2024" 09:58:00
@@ -47,6 +47,11 @@ ffmpeg \
 		drawtext=timecode='$start_time': r=30: x=700: y=580: fontsize=36:fontcolor=white: box=1:boxcolor=gray" \
 	"$outfile"
 
-# From https://trac.ffmpeg.org/wiki/FilteringGuide#BurntinTimecode
-# ffmpeg -i in.mp4 -vf "drawtext=fontfile=/usr/share/fonts/truetype/DroidSans.ttf: timecode='09\:57\:00\;00': r=30: \
-#    x=(w-tw)/2: y=h-(2*lh): fontcolor=white: box=1: boxcolor=0x00000000@1" -an -y out.mp4
+# Play royalty-free beep from https://www.soundjay.com/beep-sounds-1.html to say we're done
+afplay ./beep-02.wav
+
+# and distinguish the end of the process in the terminal
+echo ""
+echo "============ Completed: ${label}"
+echo ""
+
