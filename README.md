@@ -5,7 +5,7 @@ I regularly record public meetings in my town and post them on
 This allows residents who could not attend the meeting in person to see
 what occurred. It also supports creation of accurate minutes. 
 
-I like to add a label (consisting of the committee name and date) and a timecode (a running clock showing the current time in the meeting).
+I like to add a label (showing the committee name and date) and a timecode (a running clock showing the current time in the meeting).
 I found a free program [Shutter Encoder](https://shutterencoder.com)
 that does this. It works well, but has a detailed (very fussy) user interface
 that requires a long set of steps for every new video.
@@ -30,6 +30,9 @@ NB: You may need to install the `ffmpeg` program. Download a pre-built binary
 from [ffmpeg.org](https://ffmpeg.org//download.html#build-mac),
 or read more on that site for getting a version for your computer.
 
+_This note is also posted to my
+[RandomNeuronsFiring](https://RandomNeuronsFiring.com) blog._
+
 ## Add image, label, and timecode to an audio track
 To convert an audio-only recording into a video suitable for uploading
 to Youtube, this script combines a static JPEG photo with an audio track.
@@ -41,29 +44,27 @@ and use the Trim (Cmd-T) function to remove the dead air
 from the start and end of the recording,
 as necessary. Save as _Meeting Name\_ddMMMyyyy.mp4_
 2. Move the resulting audio file to this folder and
-run this script, where `hh:mm:ss` is the start time of the meeting:
+run this script, where `hh:mm:ss` is the actual start time
+of the recording:
 
    ```
    sh AddTimestamp.sh "Meeting Name and Date" hh:mm:ss
    ```
    The script looks for a `.mp4` file (and the image of Town Offices)
    to produce an output file named _Meeting Name and Date-timecoded.mov_
-3. _Cleanup:_ so they won't interfere with subsequent runs:
-  - Remove the original audio file from the folder
-  - Move the resulting _...-timecoded.mov_ file to the CompletedFiles folder.
-  Discard after they have been uploaded
+3. _Cleanup:_ Move the original audio file and the resulting _...-timecoded.mov_ file to the CompletedFiles folder so they won't interfere with subsequent runs. Discard after they have been uploaded
 
 ## Add label and timecode to AVCHD files
 
 A Panasonic HDC-TM80 video camera produces a `AVCHD` meta-file
 that contains the video from a recording session.
-The files are within the `AVCHD` file, within the `AVCHD/BDMV/STREAM` directory
+The files in an `AVCHD` file are within the `AVCHD/BDMV/STREAM` directory
 with filenames `00000.MTS`, `00001.MTS`, etc.
 
 Drag the AVCHD file into this folder and run this script:
 
 ```
-sh ./TimecodeMTS.sh "Meeting Name and Date" hh:mm:ss
+sh ./TimecodeAVCHD.sh "Meeting Name and Date" hh:mm:ss
 ```
 
 The script looks for a file named `AVCHD` and
@@ -123,7 +124,3 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
    > time ffmpeg -r 1 -loop 1 -y  -i Lyme-Town-Hall-Offices-cropped-1024-1.jpeg -i SB-20231130.mp4 -c:a copy -r 1 -vcodec libx264 -shortest -pix_fmt yuv444p 11Nov2023-four.mp4
    
    Fast (takes 5-10seconds). Creates file that cannot be opened by QuickTime Player
-   
-   But this file can be run through normal Shutter Encoder procedure to add text and time code. This produces a file that works in QT Player and works on Youtube.
-
-
