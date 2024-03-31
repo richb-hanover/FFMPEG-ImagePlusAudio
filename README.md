@@ -125,5 +125,3 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
    Fast (takes 5-10seconds). Creates file that cannot be opened by QuickTime Player
    
    But this file can be run through normal Shutter Encoder procedure to add text and time code. This produces a file that works in QT Player and works on Youtube.
-
-Test line
