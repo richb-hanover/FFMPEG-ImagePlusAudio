@@ -25,7 +25,7 @@ start_time="$hours\:$minutes\:$seconds\;00"
 outfile="${label}-timecoded.mov"
 
 # Concatenate all the .MTS files
-cat AVCHD/BDMV/STREAM/*.MTS  > Merged.mts
+cat AVCHD*/BDMV/STREAM/*.MTS  > Merged.mts
 
 # Run the ffmpeg command to read the Merged.mts, add a label and timecode and produce a .mov
 #   There are lots of fussy options. See the README.md for details
