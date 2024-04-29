@@ -3,7 +3,7 @@
 I regularly record public meetings in my town and post them on
 [Youtube](https://www.youtube.com/playlist?list=PLhg_eBomuA8iBIXkkRjULVbqunRqsnHWc).
 This allows residents who could not attend the meeting in person to see
-what occurred. It also supports creation of accurate minutes. 
+what occurred. It also supports creation of accurate minutes.
 
 I like to add a label (showing the committee name and date) and a timecode (a running clock showing the current time in the meeting).
 I found a free program [Shutter Encoder](https://shutterencoder.com)
@@ -18,7 +18,7 @@ I now move the video/audio files into this directory
 and issue a command like the one below, and wait a few minutes.
 The resulting video is ready for uploading to Youtube.
 
-```
+```bash
 sh ./AddTimecode.sh "Lyme Committee Meeting-6Feb2024" 09:58:00
 ```
 
@@ -26,7 +26,7 @@ Here are the notes I use to remind myself how to make the videos using my Mac.
 This information and the resulting scripts are also available on my
 [github repo](https://github.com/richb-hanover/FFMPEG-ImagePlusAudio).
 
-NB: You may need to install the `ffmpeg` program. Download a pre-built binary 
+NB: You may need to install the `ffmpeg` program. Download a pre-built binary
 from [ffmpeg.org](https://ffmpeg.org//download.html#build-mac),
 or read more on that site for getting a version for your computer.
 
@@ -34,6 +34,7 @@ _This note is also posted to my
 [RandomNeuronsFiring](https://RandomNeuronsFiring.com) blog._
 
 ## Add image, label, and timecode to an audio track
+
 To convert an audio-only recording into a video suitable for uploading
 to Youtube, this script combines a static JPEG photo with an audio track.
 The repo contains a photo of the Lyme Town Offices which is used by default.
@@ -47,12 +48,15 @@ as necessary. Save as _Meeting Name\_ddMMMyyyy.mp4_
 run this script, where `hh:mm:ss` is the actual start time
 of the recording:
 
-   ```
+   ```bash
    sh AddTimestamp.sh "Meeting Name and Date" hh:mm:ss
    ```
+
    The script looks for a `.mp4` file (and the image of Town Offices)
    to produce an output file named _Meeting Name and Date-timecoded.mov_
-3. _Cleanup:_ Move the original audio file and the resulting _...-timecoded.mov_ file to the CompletedFiles folder so they won't interfere with subsequent runs. Discard after they have been uploaded
+3. _Cleanup:_ Move the original audio file and the resulting _...-timecoded.mov_
+file to the CompletedFiles folder so they won't interfere with subsequent runs.
+Discard after they have been uploaded
 
 ## Add label and timecode to AVCHD files
 
@@ -63,7 +67,7 @@ with filenames `00000.MTS`, `00001.MTS`, etc.
 
 Drag the AVCHD file into this folder and run this script:
 
-```
+```bash
 sh ./TimecodeAVCHD.sh "Meeting Name and Date" hh:mm:ss
 ```
 
@@ -75,20 +79,40 @@ outputs file named `MeetingName-timecoded.mov`
 Sometimes, a meeting is recorded by an
 [Owl Camera](https://www.amazon.com/Owl-360-Degree-Conference-Microphone-Automatic/dp/B0B193JVDJ/ref=sr_1_1).
 This results in a good video with good audio,
-but it's still helpful to display 
+but it's still helpful to display
 the meeting name and timecode at the bottom.
 
 Drag the Zoom file (a .mp4 file) into this folder and run this script:
 
-```
+```bash
 sh ./TimecodeZoom.sh "Meeting Name and Date" hh:mm:ss
 ```
 
 The script looks for any file with a `.mp4` extension and
 outputs file named `MeetingName-timecoded.mov`
 
+## Add label and timecode to Sony Handycam recordings
+
+This script looks for a _MP\_ROOT_ directory and timecodes it.
+It customizes the position of the label and timecode.
+NB: The Sony Handycam's 32GByte internal memory produces
+about 30.7 GBytes of data for 7h20m of video at standard resolution.
+
+```bash
+sh ./TimecodeMP_ROOT.sh "Meeting Name and Date" hh:mm:ss
+```
+
 ------
-### Background Information
+
+## Background Information
+
+### Copy files/folders to another host
+
+```bash
+scp -r folder-name user@ip-address:destination-directory
+```
+
+### References used to create the ffmpeg commands
 
 StackOverflow/SuperUser and similar sites are your friends.
 
@@ -96,17 +120,18 @@ So is ChatGPT. I gave it this initial prompt,
 "give me a ffmpeg command to read a .mts file and add a label and a timecode and output a .mov file. Be sure the audio of the .mts file is preserved." and iterated to get the final commands.
 
 ### Experiments with `ffmpeg`
+
 From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg](https://superuser.com/questions/1041816/combine-one-image-one-audio-file-to-make-one-video-using-ffmpeg)
 
-1.  Accepted answer:
+1. Accepted answer:
 `ffmpeg -loop 1 -i image.jpg -i audio.wav -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest out.mp4`
 
    > ffmpeg -loop 1 -i Lyme-Town-Hall-Offices-cropped-1024.jpeg -i SB-20231130.mp4 -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest 11Nov2023-first.mp4
-   
+
    Takes a while to encode
 
 2. PJBrunet and Kokizzu:
-` ffmpeg -r 1 -loop 1 -y -i 1.jpg -i 1.m4a -c:a copy -r 1 -vcodec libx264 -shortest 1.avi`
+`ffmpeg -r 1 -loop 1 -y -i 1.jpg -i 1.m4a -c:a copy -r 1 -vcodec libx264 -shortest 1.avi`
 
    > time ffmpeg -r 1 -loop 1 -y -i Lyme-Town-Hall-Offices-cropped-1024.jpeg -i SB-20231130.mp4 -c:a copy -r 1 -vcodec libx264 -shortest 11Nov2023-second.mp4
 
@@ -122,5 +147,5 @@ From: [https://superuser.com/questions/1041816/combine-one-image-one-audio-file-
 4. Same as #2 with odd number of pixels, using `-pix_fmt yuv444p` right before name of output file.
 
    > time ffmpeg -r 1 -loop 1 -y  -i Lyme-Town-Hall-Offices-cropped-1024-1.jpeg -i SB-20231130.mp4 -c:a copy -r 1 -vcodec libx264 -shortest -pix_fmt yuv444p 11Nov2023-four.mp4
-   
+
    Fast (takes 5-10seconds). Creates file that cannot be opened by QuickTime Player
