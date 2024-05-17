@@ -110,6 +110,8 @@ sh ./TimecodeMP_ROOT.sh "Meeting Name and Date" hh:mm:ss
 
 ```bash
 scp -r folder-name user@ip-address:destination-directory
+# Specifics
+scp -r AVCHD-xxxxx account@192.168.1.1:/Users/account/github/FFMPEG-ImagePlusAudio
 ```
 
 ### References used to create the ffmpeg commands
