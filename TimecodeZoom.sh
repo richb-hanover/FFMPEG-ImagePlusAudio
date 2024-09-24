@@ -29,8 +29,8 @@ outfile="${label}-timecoded.mov"
  
 ffmpeg -i *.mp4 \
 	-s 1280x720 -c:v libx264 -crf 23 -c:a copy \
-	-vf "drawtext=text=${label}:               x=100:  y=1030: fontsize=48:fontcolor=white: box=1:boxcolor=gray, \
-		drawtext=timecode='$start_time': r=30: x=1500: y=1030: fontsize=48:fontcolor=white: box=1:boxcolor=gray" \
+	-vf "drawtext=text=${label}:               x=40:  y=325: fontsize=18:fontcolor=white: box=1:boxcolor=gray, \
+		drawtext=timecode='$start_time': r=30: x=500: y=325: fontsize=18:fontcolor=white: box=1:boxcolor=gray" \
    	-y \
    	"$outfile"
 
