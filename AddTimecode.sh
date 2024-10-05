@@ -27,8 +27,8 @@ echo "***** $label" "$start_frame" "$start_time"
 # Get the base filename of ".mp4" files in the current directory
 file_name=$(find . -maxdepth 1 -type f -name "*.mp4" -exec basename {} \;)
 
-# Append ".mov"
-outfile="${file_name%.mp4}-timecoded.mov"
+# Append  "-timecoded.mov" to the provided label for the file name
+outfile="${label}-timecoded.mov"
 
 # Run the ffmpeg command to read the two files and produce a .mov
 #   There are lots of fussy options. See the README.md for details
