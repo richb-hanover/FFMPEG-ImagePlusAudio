@@ -9,3 +9,8 @@ CompletedFiles/*
 AVCHD/*
 On-Deck/*
 AVCHD*
+*.summary.md
+*.transcript.txt
+*-timecoded.mp4
+*-timecoded.wav
+
